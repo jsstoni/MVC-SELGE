@@ -1,6 +1,7 @@
 <?php
 namespace src;
-class Router
+use src\Request;
+class Router extends Request
 {
 	const	DEFAULT_REGEX = '/:([^\/]+)/',
 			REPLACE_REGEX = '([^/]+)';
