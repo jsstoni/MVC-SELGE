@@ -20,4 +20,7 @@ autoloading();
 
 $selge = new src\Router();
 $selge->_setMain('mvc-selge');
+$selge->get('/', function() {
+	echo "hola mundo";
+});
 $selge->run();
