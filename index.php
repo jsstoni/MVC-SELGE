@@ -17,3 +17,5 @@ function autoloading()
     });
 }
 autoloading();
+
+$selge = new src\Router();
