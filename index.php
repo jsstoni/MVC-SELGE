@@ -19,3 +19,4 @@ function autoloading()
 autoloading();
 
 $selge = new src\Router();
+$selge->_setMain('mvc-selge');
