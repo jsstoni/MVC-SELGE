@@ -1,10 +1,10 @@
 <?php
 namespace controller;
-use model;
+use model\User;
 class Home
 {
 	public function Index()
 	{
-		echo "casa";
+		var_dump(User::All());
 	}
 }

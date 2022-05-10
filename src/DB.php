@@ -1,4 +1,6 @@
 <?php
+namespace src;
+use PDO;
 trait DB
 {
 	protected static $instance = null;

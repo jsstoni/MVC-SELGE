@@ -1,9 +1,10 @@
 <?php
 namespace model;
+use src\DB;
 class User
 {
-	use src\DB;
-	public function __construct()
+	public static function All()
 	{
+		return DB::query("SELECT * FROM usuarios");
 	}
 }
