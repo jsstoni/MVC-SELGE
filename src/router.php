@@ -78,10 +78,12 @@ class Router
 
 	private function _convertRequest($path)
 	{
-		$route = explode('/', $path[0]);
+		$route = explode('/', rtrim($path[0], '/')); //Original path
 		$url_route = explode('/', rtrim($this->url, '/'));
-		$route_union = array_combine($route, $url_route);
 		$args = array();
+
+		$route_union = array_combine($route, $url_route);
+
 		foreach ($route_union as $key => $value) {
 			if (preg_match(self::DEFAULT_REGEX, $key)) {
 				$key = str_replace(':', '', $key);
@@ -98,7 +100,7 @@ class Router
 		switch (true) {
 			case (is_string($cb)):
 				list($controller, $method) = explode("@", $cb);
-				$controller = "Controller\\{$controller}";
+				$controller = "controller\\{$controller}";
 				$controller = array((new $controller), $method);
 				break;
 			case (is_array($cb)):

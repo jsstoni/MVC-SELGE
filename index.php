@@ -20,7 +20,5 @@ autoloading();
 
 $selge = new src\Router();
 $selge->_setMain('mvc-selge');
-$selge->get('/:id/:in', function($request) {
-	var_dump($request);
-});
+$selge->get('/', 'Home@Index');
 $selge->run();
