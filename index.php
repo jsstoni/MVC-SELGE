@@ -25,5 +25,5 @@ autoloading();
 
 $selge = new src\Router();
 $selge->_setMainFolder('mvc-selge');
-$selge->get('/', 'Home@Index');
+$selge->setBasePath('routes.php');
 $selge->run();

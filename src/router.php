@@ -30,6 +30,20 @@ class Router
 		return $regex;
 	}
 
+	public function setBasePath($path)
+	{
+		if (file_exists(ROOT.$path)) {
+			$routes = require_once ROOT . $path;
+			if (is_array($routes)) {
+				foreach ($routes as $method => $args) {
+					foreach ($args as $key) {
+						call_user_func_array(array($this, $method), $key);
+					}
+				}
+			}
+		}
+	}
+
 	public function get($path, $cb)
 	{
 		$path = $this->main.$path;
