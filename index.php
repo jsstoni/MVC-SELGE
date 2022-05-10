@@ -6,6 +6,11 @@ header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-Type: application/json");
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', realpath(dirname(__FILE__)).DS);
+define('HOST', 'localhost');
+define('DBNAME', 'selge');
+define('USER', 'root');
+define('PASS', '');
+
 function autoloading()
 {
     spl_autoload_register(function ($class) {
