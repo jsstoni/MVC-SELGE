@@ -93,12 +93,33 @@ class Router
 		return $args;
 	}
 
+	private function _controller($cb)
+	{
+		switch (true) {
+			case (is_string($cb)):
+				list($controller, $method) = explode("@", $cb);
+				$controller = "Controller\\{$controller}";
+				$controller = array((new $controller), $method);
+				break;
+			case (is_array($cb)):
+				$controller = $cb;
+				break;
+			case (is_callable($cb)):
+				$controller = $cb;
+				break;
+			default:
+				$controller = NULL;
+				break;
+		}
+		return $controller;
+	}
+
 	public function run()
 	{
 		if ($check = $this->_checkURL()) {
 			$path = array_keys($check);
 			$cb = array_values($check);
-			return call_user_func($cb[0], $this->_convertRequest($path));
+			return call_user_func($this->_controller($cb[0]), $this->_convertRequest($path));
 		}
 		echo "Error 404";
 	}
