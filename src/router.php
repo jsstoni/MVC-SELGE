@@ -1,7 +1,6 @@
 <?php
 namespace src;
-use src\Request;
-class Router extends Request
+class Router
 {
 	const	DEFAULT_REGEX = '/:([^\/]+)/',
 			REPLACE_REGEX = '([^/]+)';
@@ -37,25 +36,25 @@ class Router extends Request
 		$this->GET[$path] = $cb;
 	}
 
-	public function post()
+	public function post($path, $cb)
 	{
 		$path = $this->main.$path;
 		$this->POST[$path] = $cb;
 	}
 
-	public function put()
+	public function put($path, $cb)
 	{
 		$path = $this->main.$path;
 		$this->PUT[$path] = $cb;
 	}
 
-	public function delete()
+	public function delete($path, $cb)
 	{
 		$path = $this->main.$path;
 		$this->DELETE[$path] = $cb;
 	}
 
-	private function checkURL()
+	private function _checkURL()
 	{
 		$list = array();
 		switch ($this->method) {
@@ -77,12 +76,30 @@ class Router extends Request
 		}, ARRAY_FILTER_USE_KEY);
 	}
 
+	private function _convertRequest($path)
+	{
+		$route = explode('/', $path[0]);
+		$url_route = explode('/', rtrim($this->url, '/'));
+		$route_union = array_combine($route, $url_route);
+		$args = array();
+		foreach ($route_union as $key => $value) {
+			if (preg_match(self::DEFAULT_REGEX, $key)) {
+				$key = str_replace(':', '', $key);
+				if (! array_key_exists($key, $args)) {
+					$args[$key] = $value;
+				}
+			}
+		}
+		return $args;
+	}
+
 	public function run()
 	{
-		if ($check = $this->checkURL()) {
+		if ($check = $this->_checkURL()) {
 			$path = array_keys($check);
 			$cb = array_values($check);
-			call_user_func_array($cb[0], array());
+			return call_user_func($cb[0], $this->_convertRequest($path));
 		}
+		echo "Error 404";
 	}
 }
