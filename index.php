@@ -24,6 +24,6 @@ function autoloading()
 autoloading();
 
 $selge = new src\Router();
-$selge->_setMain('mvc-selge');
+$selge->_setMainFolder('mvc-selge');
 $selge->get('/', 'Home@Index');
 $selge->run();

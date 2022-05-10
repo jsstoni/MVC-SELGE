@@ -18,7 +18,7 @@ class Router
 		$this->method = $_SERVER['REQUEST_METHOD'];
 	}
 
-	public function _setMain($path)
+	public function _setMainFolder($path)
 	{
 		$this->main = '/'.ltrim($path, '/');
 	}
