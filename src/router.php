@@ -1,5 +1,6 @@
 <?php
 namespace src;
+use src\Request;
 class Router
 {
 	const	DEFAULT_REGEX = '/:([^\/]+)/',
@@ -90,7 +91,7 @@ class Router
 		}, ARRAY_FILTER_USE_KEY);
 	}
 
-	private function _convertRequest($path)
+	private function _Request($path, Request $request)
 	{
 		$route = explode('/', rtrim($path[0], '/')); //Original path
 		$url_route = explode('/', rtrim($this->url, '/'));
@@ -106,7 +107,8 @@ class Router
 				}
 			}
 		}
-		return $args;
+		$request->setInputPath($args);
+		return $request;
 	}
 
 	private function _controller($cb)
@@ -135,7 +137,7 @@ class Router
 		if ($check = $this->_checkURL()) {
 			$path = array_keys($check);
 			$cb = array_values($check);
-			return call_user_func($this->_controller($cb[0]), $this->_convertRequest($path));
+			return call_user_func($this->_controller($cb[0]), $this->_Request($path, new Request));
 		}
 		echo "Error 404";
 	}

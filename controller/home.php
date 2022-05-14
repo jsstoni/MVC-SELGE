@@ -3,8 +3,8 @@ namespace controller;
 use model\User;
 class Home
 {
-	public function Index()
+	public function Index($request)
 	{
-		var_dump(User::All());
+		echo json_encode(User::All());
 	}
 }
