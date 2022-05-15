@@ -1,6 +1,7 @@
 <?php
 namespace src;
 use src\DB;
+use src\Paginacion;
 class Model
 {
 	public function getResult($sql)
@@ -21,15 +22,15 @@ class Model
 
 	public function queryPaginate($query, $page, $quantity)
 	{
-		$q = $this->Query($query);
+		$q = self::Query($query);
 		if ($q) {
 			$totalQuery = $q->rowCount();
 			if ($totalQuery > 0 || $totalQuery >= $quantity) {
 				$paginar = new Paginacion($page, $totalQuery, $quantity);
 				$query .= " LIMIT {$paginar->start}, {$paginar->end}";
-				$result = $this->getResult($query);
+				$result = self::getResult($query);
 			} else {
-				$result = $this->getResult($query);
+				$result = self::getResult($query);
 			}
 			$data = array(
 				'result' => $result,
@@ -118,8 +119,8 @@ class Model
 				$q = "INSERT INTO {$table} ";
 				break;
 		}
-		$q = $q.$this->_rows($values);
-		$records = $this->_records($values);
+		$q = $q.self::_rows($values);
+		$records = self::_records($values);
 		try {
 			$statement = DB::prepare($q);
 			$result = is_array($values) ? $statement->execute($records) : $statement->execute();
@@ -156,7 +157,7 @@ class Model
 				return $v." = values(".$v.")";
 			}, $columns));
 			$sql .= $col." VALUES ".implode(", ", $values)." ON DUPLICATE KEY UPDATE {$dku}";
-			return $this->Query($sql);
+			return self::Query($sql);
 		} catch (\Exception $e) {
 			return false;
 		}
@@ -174,8 +175,8 @@ class Model
 
 	public function Update($table, $set = array(), $where)
 	{
-		$setvalues = $this->_setvalues($set);
-		$records = $this->_records($set);
+		$setvalues = self::_setvalues($set);
+		$records = self::_records($set);
 		$q = "UPDATE {$table} SET {$setvalues} WHERE {$where}";
 		$statement = DB::prepare($q);
 		$result = is_array($set) ? $statement->execute($records) : $statement->execute();

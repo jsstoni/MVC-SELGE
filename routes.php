@@ -1,7 +1,7 @@
 <?php
 return [
 	'get' => [
-		['/:id', 'Home@Index']
+		['/usuario/clientes', 'Usuarios@clientes']
 	],
 	'post' => [
 	],

@@ -3,8 +3,8 @@ namespace model;
 use src\Model;
 class User extends Model
 {
-	public static function All()
+	public static function misClientes($page = 1, $rows = 12)
 	{
-		return self::getResult("SELECT * FROM usuarios");
+		return self::queryPaginate("SELECT * FROM clientes", $page, $rows);
 	}
 }
