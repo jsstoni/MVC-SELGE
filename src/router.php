@@ -1,6 +1,7 @@
 <?php
 namespace src;
 use src\Request;
+use src\Auth;
 class Router
 {
 	const	DEFAULT_REGEX = '/:([^\/]+)/',
@@ -134,7 +135,9 @@ class Router
 
 	public function run()
 	{
-		if ($check = $this->_checkURL()) {
+		$auth = new Auth();
+		$check = $this->_checkURL();
+		if ($check && $auth->getAuthorization()) {
 			$path = array_keys($check);
 			$cb = array_values($check);
 			return call_user_func($this->_controller($cb[0]), $this->_Request($path, new Request));

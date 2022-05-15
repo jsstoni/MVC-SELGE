@@ -23,7 +23,7 @@ function autoloading()
 }
 autoloading();
 
-$secure = new src\Secure;
+$secure = new src\Secure();
 $selge = new src\Router();
 $selge->_setMainFolder('mvc-selge');
 $selge->setBasePath('routes.php');
