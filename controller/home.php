@@ -5,6 +5,6 @@ class Home
 {
 	public function Index($request)
 	{
-		echo json_encode(User::All());
+		var_dump(User::All());
 	}
 }

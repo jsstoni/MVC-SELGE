@@ -27,7 +27,6 @@ class Auth
     {
 		$headers = apache_request_headers();
 		if (isset($headers['Authorization'])) {
-			echo $this->decode($headers['Authorization']);
 			return $this->decode($headers['Authorization']);
 		}
 		return false;
