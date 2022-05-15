@@ -23,11 +23,11 @@ class Auth
         return openssl_decrypt($valor, self::$method, self::$clave, true, $iv);
 	}
 
-	public function getAuthorization()
+	public static function getAuthorization()
     {
 		$headers = apache_request_headers();
 		if (isset($headers['Authorization'])) {
-			return $this->decode($headers['Authorization']);
+			return self::decode($headers['Authorization']);
 		}
 		return false;
 	}

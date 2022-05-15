@@ -135,9 +135,8 @@ class Router
 
 	public function run()
 	{
-		$auth = new Auth();
 		$check = $this->_checkURL();
-		if ($check && $auth->getAuthorization()) {
+		if ($check && Auth::getAuthorization()) {
 			$path = array_keys($check);
 			$cb = array_values($check);
 			return call_user_func($this->_controller($cb[0]), $this->_Request($path, new Request));
