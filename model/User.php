@@ -1,10 +1,10 @@
 <?php
 namespace model;
-use src\DB;
-class User
+use src\Model;
+class User extends Model
 {
 	public static function All()
 	{
-		return DB::query("SELECT * FROM usuarios");
+		return self::getResult("SELECT * FROM usuarios");
 	}
 }
